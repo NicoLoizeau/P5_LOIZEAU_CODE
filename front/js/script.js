@@ -1,28 +1,25 @@
-//variable pour reprendre la requète API
-let products = []
+//URL API
+const API = "http://localhost:3000/api/products"; 
 //requète
-fetch("http://localhost:3000/api/products")
+fetch(API)
+    .then(function(res){
+        return res.json();
+    })
+//for of intégration des données en HTML
     .then(function(products){
-        if (products.ok){
-            return products.json();
+        for (data of products){
+            document.getElementById("items")
+            .innerHTML += `
+            <a href="./product.html?id=${data._id}">
+                <article>
+                    <img src="${data.imageUrl}" alt="${data.altTxt}">
+                    <h3 class="productName">${data.name}</h3>
+                    <p class="productDescription">${data.description}</p>
+                </article>
+            </a>
+            `;
         }
     })
-    .then(function(value){
-        console.log(value);
-    })
     .catch(function(error){
-});
-
-//--variable pour cibler la ligne 0
-//let productName = products.name[0];
-//--vairable pour modifier le nom du produit dans le DOM
-
-
-let elt = document.getElementsByClassName("productName");
-elt.textContent = "hello";
-
-
-//boucle for of pour afficher chaque product
-
-//innerHTLM pour afficher le tableau dans HTML
-
+        alert(error);
+    })
