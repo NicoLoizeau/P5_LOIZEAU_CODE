@@ -1,16 +1,29 @@
 let cartArray = JSON.parse(localStorage.getItem("cartArray"));
-console.log(cartArray[0].ID)
 
 if (cartArray.lenght === 0 ){
     alert("le panier est vide")
 }
 else{
-    
+    let API = "http://localhost:3000/api/products"; 
+//requète
+fetch(API)
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(data){
+        console.log(data);
+ 
     for (let i = 0; i < cartArray.lenght; i++){
-        document.getElementById("cart_items").innerHTML +=
-    `<article class="cart__item" data-id="${cartArray[i].ID}" data-color="${cartArray[i].couleur}">
+        for (let j = 0; j < data.lenght; j++){
+            if (cartArray[i].ID = data[j]._id){
+                alert("youpi !");
+            }/*
+            else alert("t'as fait de la merde !!!");
+        }
+        document.getElementById("cart_items").innerHTML += `
+    <article class="cart__item" data-id="${cartArray[i].ID}" data-color="${cartArray[i].couleur}">
         <div class="cart__item__img">
-            <img src="../images/product01.jpg" alt="Photographie d'un canapé">
+            <img src="${data.imageUrl} " alt="">
         </div>
         <div class="cart__item__content">
             <div class="cart__item__content__description">
@@ -28,6 +41,11 @@ else{
                 </div>
             </div>
         </div>
-    </article>`
-    }
+    </article>
+    `*/
+        }}}
+    )
+    .catch(function(error){
+        alert(error);
+    })
 }
