@@ -24,33 +24,69 @@ fetch(API)
         let allColors = data.colors;
             for (let i = 0; i < allColors.length; i++){
             color.innerHTML += `<option value=${data.colors[i]}>${data.colors[i]}</option>`;
-            }
+        }
 //si erreur
     })
     .catch(function(error){
         alert(error);
     })
 
+    //-- revoir la couleur et les IF----------//
+
 //ajout au panier
-let colorChoice = document.getElementsById("colors").value;
-console.log(colorChoice)
-    //ajouter vérif choix de la couleur
-let quantity = document.getElementById("quantity").value;
-    //ajouter vérif quantity between 1-100
+const colorChoice = document.querySelector("#colors");
+const quantity = document.querySelector("#quantity");
     //event clic & add à cart
-let ajouterAuPanier = document.getElementsByClassName("item__content__addButton")
-    ajouterAuPanier[0].addEventListener('click', function(add){
+let ajouterAuPanier = document.getElementById("addToCart");
+
+    ajouterAuPanier.addEventListener('click', function(add){
     add.stopPropagation();
-    if (colorChoice = "--SVP, choisissez une couleur --"){
+    add.preventDefault();
+    if (colorChoiceValue = ""){
     alert("--SVP, choisissez une couleur --"); 
     }
-    else if (quantity < 1){
+    else if (quantity.value < 1){
     alert("Ajoutez la quantité d'articles");
     }
-    else if (quantity > 100){
+    else if (quantity.value > 100){
     alert("Vous ne pouvez commander que 100 articles !");
     }
-/*localStorage.setItem(productId,colorChoice,quantity)
-*/
-//this.alert("ça marche !")
+    else{ 
+        let colorChoiceValue = colorChoice.value;
+        let panier = {
+            ID : productId,
+            couleur : colorChoiceValue,
+            quantity : parseInt(quantity.value, 10),
+        }
+        alert(quantity.value + " ajouté à votre panier");
+        console.log(panier);
+
+    //////localStorage//////
+    let cartArray = JSON.parse(localStorage.getItem("cartArray"));
+
+    if (cartArray){
+        let item = cartArray.find(
+            (item) =>
+            item.ID == panier.ID && item.couleur == panier.couleur
+            );
+        if (item){
+            item.quantity = item.quantity + panier.quantity;
+            console.log(item.quantity);
+            localStorage.setItem("cartArray", JSON.stringify(cartArray));
+            return;
+        }
+        cartArray.push(panier);
+        localStorage.setItem("cartArray", JSON.stringify(cartArray));
+        }
+    else{
+        let newTabLocalStorage = [];
+        newTabLocalStorage.push(panier);
+        localStorage.setItem("cartArray", JSON.stringify(newTabLocalStorage));
+        }
+         //test   
+
+    console.log(cartArray)
+    }
+    
+
 })
