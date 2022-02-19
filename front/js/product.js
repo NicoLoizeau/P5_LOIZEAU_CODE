@@ -28,7 +28,7 @@ fetch(API)
 //si erreur
     })
     .catch(function(error){
-        alert(error);
+        console.error(error);
     })
 
     //-- revoir la couleur et les IF----------//
@@ -58,14 +58,14 @@ let ajouterAuPanier = document.getElementById("addToCart");
             couleur : colorChoiceValue,
             quantity : parseInt(quantity.value, 10),
         }
-        alert(quantity.value + " ajouté à votre panier");
+        //alert(quantity.value + " ajouté à votre panier");
         console.log(panier);
 
     //////localStorage//////
     let cartArray = JSON.parse(localStorage.getItem("cartArray"));
 
     if (cartArray){
-        let item = cartArray.find(
+        let item = cartArray.find(// si trouvé dans le panier ID + color ajoute la quantité et push dans le local storage
             (item) =>
             item.ID == panier.ID && item.couleur == panier.couleur
             );
@@ -78,7 +78,7 @@ let ajouterAuPanier = document.getElementById("addToCart");
         cartArray.push(panier);
         localStorage.setItem("cartArray", JSON.stringify(cartArray));
         }
-    else{
+    else{ // si pas dans le local storage push le produit
         let newTabLocalStorage = [];
         newTabLocalStorage.push(panier);
         localStorage.setItem("cartArray", JSON.stringify(newTabLocalStorage));

@@ -22,5 +22,5 @@ fetch(API)
     })
 //si erreur
     .catch(function(error){
-        alert(error);
+        console.error(error);
     })
