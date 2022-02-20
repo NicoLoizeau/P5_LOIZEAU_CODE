@@ -2,7 +2,8 @@ let cartArray = JSON.parse(localStorage.getItem("cartArray"));
 let orderId = "";
 
 if (cartArray === null || cartArray.length === 0){
-    alert("le panier est vide")
+    let titleCartEmpty = document.getElementById("cartAndFormContainer")
+    titleCartEmpty.innerHTML = `<h1>Votre panier est vide</h1>`
 }
 else{
     let API = "http://localhost:3000/api/products"; 
@@ -90,14 +91,14 @@ function displayData(cartArray, data){
                 if (item){
                     item.quantity = itemModified.quantity;
                     localStorage.setItem("cartArray", JSON.stringify(cartArray));
+                    window.location.href = "cart.html";//actualisation de la page  
                     return;
                 }
                 cartArray.push(itemModified);
                 localStorage.setItem("cartArray", JSON.stringify(cartArray));
-                }        
-            }
-            )
-        }  
+                }      
+            })
+        }
         console.log(cartArray);
 
         /////////suppressions/////////
@@ -200,31 +201,25 @@ order.addEventListener('click', function(orderWatch){
     orderWatch.stopPropagation();
     orderWatch.preventDefault();
 
-    contact = {
-        firstName : firstName.value, 
-        lastName : lastName.value,
-        address : address.value,
-        city : city.value, 
-        email : mail.value,
-    }
-    let products = []
-        for (let i = 0; i < cartArray.length; i++){
-           let productsId = [cartArray[i].ID];
-           products.splice(i, 0 ,productsId);
-        }
-    /*
-    let products = cartArray;
-    console.log(contact);
-    console.log(products);
-    */
-    if (    //siformulaire valide
-        firstNameRegex ===
-        lastNameRegex ===
-        cityRegex ===
-        addressRegex ===
-        mailRegex
+    if (    //si formulaire valide
+        firstNameRegex === true &&
+        lastNameRegex === true &&
+        cityRegex === true &&
+        addressRegex === true &&
+        mailRegex === true
         ) {
-        localStorage.setItem("contact", JSON.stringify(contact));
+            contact = {
+                firstName : firstName.value, 
+                lastName : lastName.value,
+                address : address.value,
+                city : city.value, 
+                email : mail.value,
+            }
+            let products = []
+                for (let i = 0; i < cartArray.length; i++){
+                   let productsId = [cartArray[i].ID];
+                   products.splice(i, 0 ,productsId);
+                }
 
         ///////send order /////
         let sendOrder = "http://localhost:3000/api/products/order"
@@ -237,9 +232,12 @@ order.addEventListener('click', function(orderWatch){
             })
             .then((server) => {
                 orderId = server.orderId;
-                console.log(orderId);
             })
-            .catch((error) =>{
-                console.log(error(error));
-            })
-}})
+        if (orderId != ""){
+            location.href = "confirmation.html?id="+orderId;
+        }
+    } else if (cartArray.length = 0)  {
+        let titleCartEmpty = document.getElementById("cartAndFormContainer")
+        titleCartEmpty.innerHTML = `<h1>Vous ne pouvez pas commander un panier vide !</h1>`
+    }     
+})

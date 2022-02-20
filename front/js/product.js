@@ -42,15 +42,17 @@ let ajouterAuPanier = document.getElementById("addToCart");
     ajouterAuPanier.addEventListener('click', function(add){
     add.stopPropagation();
     add.preventDefault();
-    if (colorChoiceValue = ""){
-    alert("--SVP, choisissez une couleur --"); 
-    }
+    if (colorChoice.value == ""){
+        //colorChoice.style.backgroundColor = ("#bb0b0b");
+        //colorChoice.style.fontWeight = ("bold");
+        alert("--SVP, choisissez une couleur --"); 
+        }
     else if (quantity.value < 1){
-    alert("Ajoutez la quantité d'articles");
-    }
+        alert("Ajoutez la quantité d'articles");
+        }
     else if (quantity.value > 100){
-    alert("Vous ne pouvez commander que 100 articles !");
-    }
+        alert("Vous ne pouvez commander que 100 articles !");
+        }
     else{ 
         let colorChoiceValue = colorChoice.value;
         let panier = {
