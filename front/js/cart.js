@@ -6,7 +6,7 @@ if (cartArray === null || cartArray.length === 0){
 }
 else{
     let API = "http://localhost:3000/api/products"; 
-//requète
+//requète API
 fetch(API)
     .then(function(res){
         return res.json();
@@ -127,38 +127,38 @@ let firstNameRegex,
     addressRegex, 
     mailRegex 
     = false ;
+
     //////whatch and control first name///// 
 let firstName = document.getElementById("firstName");
-firstName.addEventListener('change', function(firstNameWatch){
-console.log(firstName.value);
-
+    firstName.addEventListener('change', function(firstNameWatch){
+    console.log(firstName.value);
 let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
-if (regexText.test(firstName.value)){
-    document.getElementById("firstNameErrorMsg").textContent = ""
-    return firstNameRegex = true;
-} else {
-    document.getElementById("firstNameErrorMsg").textContent = "Le format de votre prénom n'est pas valide"
-    return firstNameRegex = false;
+    if (regexText.test(firstName.value)){
+        document.getElementById("firstNameErrorMsg").textContent = ""
+        return firstNameRegex = true;
+    } else {
+        document.getElementById("firstNameErrorMsg").textContent = "Le format de votre prénom n'est pas valide"
+        return firstNameRegex = false;
 }});
+
     //////whatch and control last name///// 
-    let lastName = document.getElementById("lastName");
-    lastName.addEventListener('change', function(firstNameWatch){
+let lastName = document.getElementById("lastName");
+    lastName.addEventListener('change', function(lastNameWatch){
     console.log(lastName.value);
-    
-    let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
+let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
     if (regexText.test(lastName.value)){
         document.getElementById("lastNameErrorMsg").textContent = ""
         return lastNameRegex = true;
     } else {
         document.getElementById("lastNameErrorMsg").textContent = "Le format de votre nom n'est pas valide"
         return lastNameRegex = false;
-    }});
+}});
+
     //////whatch and control city///// 
-    let city = document.getElementById("city");
-    city.addEventListener('change', function(firstNameWatch){
+let city = document.getElementById("city");
+    city.addEventListener('change', function(cityWatch){
     console.log(city.value);
-    
-    let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/; //lettres avec au moins une majuscule et -" "
+let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/; //lettres avec au moins une majuscule et -" "
     if (regexText.test(city.value)){
         document.getElementById("cityErrorMsg").textContent = ""
         return cityRegex = true;
@@ -166,30 +166,32 @@ if (regexText.test(firstName.value)){
         document.getElementById("cityErrorMsg").textContent = "Le format de votre ville n'est pas valide"
         return cityRegex = false;
     }});
+
     //////whatch and control adress///// 
-    let address = document.getElementById("address");
-    address.addEventListener('change', function(firstNameWatch){
+let address = document.getElementById("address");
+    address.addEventListener('change', function(addressWatch){
     console.log(address.value);
-    let regexaddress = /^[a-zA-Z0-9- ,]{5,50}$/;  //entre 5 et 50 alpha + -," "
-    if (regexaddress.test(address.value)){
+let regexAddress = /^[a-zA-Z0-9- ,]{5,50}$/;  //entre 5 et 50 alpha + -," "
+    if (regexAddress.test(address.value)){
         document.getElementById("addressErrorMsg").textContent = ""
         return addressRegex = true;
     } else {
         document.getElementById("addressErrorMsg").textContent = "Le format de votre adresse n'est pas valide"
         return addressRegex = false;
-    }});
+}});
+
     //////whatch and control email///// 
-    let mail = document.getElementById("email");
-    mail.addEventListener('change', function(firstNameWatch){
+let mail = document.getElementById("email");
+    mail.addEventListener('change', function(mailWatch){
     console.log(mail.value);
-    let regexMail = /^\w+([\._-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  // alpha + .-_ + alpha + @ + alpha + . + 2 ou 3 aplha
+let regexMail = /^\w+([\._-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  // alpha + .-_ + alpha + @ + alpha + . + 2 ou 3 aplha
     if (regexMail.test(mail.value)){
         document.getElementById("emailErrorMsg").textContent = ""
         return mailRegex = true;
     } else {
         document.getElementById("emailErrorMsg").textContent = "Le format de votre email n'est pas valide"
         return mailRegex = false;
-    }});
+}});
 
 //////formulaire/////
 let contact = {};
@@ -200,63 +202,44 @@ order.addEventListener('click', function(orderWatch){
 
     contact = {
         firstName : firstName.value, 
-        lastName : document.getElementById("lastName").value,
-        adresse : document.getElementById("address").value,
-        city : document.getElementById("city").value, 
-        email : document.getElementById("email").value,
+        lastName : lastName.value,
+        address : address.value,
+        city : city.value, 
+        email : mail.value,
     }
-    /*let products = []
+    let products = []
         for (let i = 0; i < cartArray.length; i++){
            let productsId = [cartArray[i].ID];
            products.splice(i, 0 ,productsId);
         }
-    */
+    /*
     let products = cartArray;
     console.log(contact);
     console.log(products);
-    
-    ///////regex/////
-
-//////regex mail/////
-let regexMail = (value) => {
-    return /^\w+([\.-_]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);// alpha + .-_ + alpha + @ + alpha + . + 2 ou 3 aplha
-};    
-function mailRegex(){
-    let mailContact = contact.email;
-    if (regexMail(mailContact)){
-        return true;
-    } else {
-        document.getElementById("emailErrorMsg").textContent = "Le format de votre email n'est pas valide"
-        return false;
-    }
-}
-    if (
-        firstNameRegex() &&
-        lastNameRegex() &&
-        cityRegex() &&
-        adressRegex() &&
-        mailRegex()
+    */
+    if (    //siformulaire valide
+        firstNameRegex ===
+        lastNameRegex ===
+        cityRegex ===
+        addressRegex ===
+        mailRegex
         ) {
-            localStorage.setItem("contact", JSON.stringify(contact));
+        localStorage.setItem("contact", JSON.stringify(contact));
 
-    ///////send order /////
-    function sendOrder(){
-        const sendOrder = fetch("http://localhost:3000/api/products/order",{
-        method: "POST",
-        headers: {
-            'Accept': 'application/json', 
-            'content-Type': 'application/json',
-        },
-        body: JSON.stringify({contact, products}),
-        })
-        .then((response) => {
+        ///////send order /////
+        let sendOrder = "http://localhost:3000/api/products/order"
+            fetch(sendOrder, {
+            method: "POST",
+            body: JSON.stringify({contact, products}),
+            headers: {"Accept": "application/json", "Content-type": "application/json"}})
+            .then((response) => {
             return response.json();
-        })
-        .then((server) => {
-            orderId = server.orderId;
-            console.log(orderId);
-        })
-        .catch((error) => {
-            console.error(error);
-            }
-        )}}})
+            })
+            .then((server) => {
+                orderId = server.orderId;
+                console.log(orderId);
+            })
+            .catch((error) =>{
+                console.log(error(error));
+            })
+}})
