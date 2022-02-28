@@ -176,6 +176,29 @@ mail.addEventListener('change', function (mailWatch) {
 });
 
 //////formulaire/////
+
+////désactivation du bouton si form invalide/////
+function disableBouton() {
+    const submitBtn = document.getElementById('order');
+    if (firstNameRegex === true &&
+        lastNameRegex === true &&
+        cityRegex === true &&
+        addressRegex === true &&
+        mailRegex === true) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+}
+//// surveillance des inputs/////
+const inputs = document.getElementsByTagName("input");
+for (let input of inputs) {
+    console.log(input)
+    input.addEventListener('change', (event) => {
+        disableBouton();
+    });
+}
+
 let contact = {};           //création de l'objet contact à envoyer à l'API
 let order = document.getElementById("order")    //surveillance du click commande
 order.addEventListener('click', function (orderWatch) {
@@ -222,6 +245,8 @@ order.addEventListener('click', function (orderWatch) {
             })
     }
 })
+
+////affichage du total/////
 function displayTotal(sumQuanttity, sumPrice) {
     let totalQuantity = document.getElementById("totalQuantity");
     let totalPrice = document.getElementById("totalPrice");
@@ -229,6 +254,8 @@ function displayTotal(sumQuanttity, sumPrice) {
     totalPrice.textContent = sumPrice;
 
 }
+
+//// suppression /////
 function deleteItem(i, data) {
     const item = cartArray[i];
     let prix = 0;
@@ -301,23 +328,4 @@ function changeItem(i, data) {
     cartArray.splice([i], 1, itemModified);//suppression dans le array avec l'indice
     localStorage.setItem("cartArray", JSON.stringify(cartArray));//maj du localStorage
 
-}/*
-//////////masquage du bouton commander //////////
-
-const displayOrder = document.getElementsByClassName('cart__order__form__submit');
-displayOrder[0].removeChild(order);
-
-
-///////// affichage du order si valide///////
-let orderOnScreen = document.getElementsByClassName('cart__order');
-orderOnScreen[0].addEventListener('change', function (event) {
-    if (                    //si formulaire valide
-        firstNameRegex === true &&
-        lastNameRegex === true &&
-        cityRegex === true &&
-        addressRegex === true &&
-        mailRegex === true
-    ) {
-        displayOrder.innerHTML = `<input type="submit" value="Commander !" id="order">`
-    }
-})*/
+}
