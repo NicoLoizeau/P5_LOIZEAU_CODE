@@ -105,53 +105,73 @@ let firstNameRegex,
         = false;
 
 
-//////surveillance et contrôle first name///// 
-let firstName = document.getElementById("firstName");
-firstName.addEventListener('change', function (firstNameWatch) {
-    console.log(firstName.value);
-    let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
-    if (regexText.test(firstName.value)) {   //affichage du test regex à l'utilisateur et stockage du résultat
-        document.getElementById("firstNameErrorMsg").textContent = ""
-        return firstNameRegex = true;
+
+
+let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
+let regexAddress = /^[a-zA-Z0-9- ,]{5,50}$/;    //entre 5 et 50 alpha + -," "
+let regexMail = /^\w+([\._-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;   //alpha + .-_ + alpha + @ + alpha + . + 2 ou 3 aplha
+let titre = "";
+let element = "";
+let ErrorMsg = "";
+
+/////fonction test regex //////
+function verif(regex, value) {
+    let test = regex.test(value);
+    if (test) {
+        return variableControle = true;
     } else {
-        document.getElementById("firstNameErrorMsg").textContent = "Le format de votre prénom n'est pas valide. Ex: John"
-        return firstNameRegex = false;
+        return variableControle = false;
     }
+}
+/////fonction message utilisateur/////
+function message(ErrorMsg, test) {
+    if (test) {
+        ErrorMsg.textContent = ""
+    } else {
+        ErrorMsg.textContent = "Le format de votre ville n'est pas valide. Ex Paris"
+    }
+}
+
+
+//////surveillance et contrôle first name///// 
+titre = "firstName";
+element = document.getElementById(`${titre}`);
+ErrorMsg = document.getElementById(`${titre + "ErrorMsg"}`);
+element.addEventListener('change', function (event) {
+    verif(regexText, element.value);
+    console.log(variableControle);
+    message(ErrorMsg, variableControle);
+    firstNameRegex = variableControle
+
+    console.log(firstNameRegex);
 });
 
 //////surveillance et contrôle last name///// 
-let lastName = document.getElementById("lastName");
-lastName.addEventListener('change', function (lastNameWatch) {
-    console.log(lastName.value);
-    let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
-    if (regexText.test(lastName.value)) {    //affichage du test regex à l'utilisateur et stockage du résultat
-        document.getElementById("lastNameErrorMsg").textContent = ""
-        return lastNameRegex = true;
-    } else {
-        document.getElementById("lastNameErrorMsg").textContent = "Le format de votre nom n'est pas valide. Ex: Doe"
-        return lastNameRegex = false;
-    }
+titre = "lastName";
+element = document.getElementById(`${titre}`);
+ErrorMsg = document.getElementById(`${titre + "ErrorMsg"}`);
+element.addEventListener('change', function (event) {
+    verif(regexText, element.value);
+    message(ErrorMsg, lastNameRegex);
+    lastNameRegex = variableControle;
+    console.log(lastNameRegex);
 });
 
 //////surveillance et contrôle city///// 
-let city = document.getElementById("city");
-city.addEventListener('change', function (cityWatch) {
-    console.log(city.value);
-    let regexText = /^([A-Z]{1}[A-Za-z- ]+)$/;  //lettres avec au moins une majuscule et -" "
-    if (regexText.test(city.value)) {        //affichage du test regex à l'utilisateur et stockage du résultat
-        document.getElementById("cityErrorMsg").textContent = ""
-        return cityRegex = true;
-    } else {
-        document.getElementById("cityErrorMsg").textContent = "Le format de votre ville n'est pas valide. Ex Paris"
-        return cityRegex = false;
-    }
+titre = "city";
+element = document.getElementById(`${titre}`);
+ErrorMsg = document.getElementById(`${titre + "ErrorMsg"}`);
+element.addEventListener('change', function (event) {
+    verif(regexText, element.value);
+    message(ErrorMsg, cityRegex);
+    cityRegex = variableControle;
+    console.log(cityRegex);
 });
 
 //////surveillance et contrôle adress///// 
 let address = document.getElementById("address");
 address.addEventListener('change', function (addressWatch) {
     console.log(address.value);
-    let regexAddress = /^[a-zA-Z0-9- ,]{5,50}$/;    //entre 5 et 50 alpha + -," "
     if (regexAddress.test(address.value)) {      //affichage du test regex à l'utilisateur et stockage du résultat
         document.getElementById("addressErrorMsg").textContent = ""
         return addressRegex = true;
@@ -165,7 +185,6 @@ address.addEventListener('change', function (addressWatch) {
 let mail = document.getElementById("email");
 mail.addEventListener('change', function (mailWatch) {
     console.log(mail.value);
-    let regexMail = /^\w+([\._-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;   //alpha + .-_ + alpha + @ + alpha + . + 2 ou 3 aplha
     if (regexMail.test(mail.value)) {                                //affichage du test regex à l'utilisateur et stockage du résultat
         document.getElementById("emailErrorMsg").textContent = ""
         return mailRegex = true;
